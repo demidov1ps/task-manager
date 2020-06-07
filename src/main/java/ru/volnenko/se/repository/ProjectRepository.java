@@ -4,9 +4,12 @@ import ru.volnenko.se.entity.Project;
 
 import java.util.*;
 
+import org.springframework.stereotype.Repository;
+
 /**
  * @author Denis Volnenko
  */
+@Repository
 public final class ProjectRepository implements ru.volnenko.se.api.repository.IProjectRepository {
 
     private final Map<String, Project> map = new LinkedHashMap<>();

@@ -4,9 +4,12 @@ import ru.volnenko.se.entity.Task;
 
 import java.util.*;
 
+import org.springframework.stereotype.Repository;
+
 /**
  * @author Denis Volnenko
  */
+@Repository
 public final class TaskRepository implements ru.volnenko.se.api.repository.ITaskRepository {
 
     private final Map<String, Task> map = new LinkedHashMap<>();

@@ -1,15 +1,18 @@
 package ru.volnenko.se.command.data.xml;
 
-import ru.volnenko.se.command.AbstractCommand;
+import ru.volnenko.se.command.ICommand;
 import ru.volnenko.se.constant.DataConstant;
 
 import java.io.File;
 import java.nio.file.Files;
 
+import org.springframework.stereotype.Component;
+
 /**
  * @author Denis Volnenko
  */
-public final class DataXmlClearCommand extends AbstractCommand {
+@Component
+public final class DataXmlClearCommand implements ICommand {
 
     @Override
     public String command() {

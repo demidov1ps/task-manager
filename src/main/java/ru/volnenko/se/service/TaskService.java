@@ -9,9 +9,12 @@ import ru.volnenko.se.entity.Task;
 import java.util.Collection;
 import java.util.List;
 
+import org.springframework.stereotype.Service;
+
 /**
  * @author Denis Volnenko
  */
+@Service
 public final class TaskService implements ITaskService {
 
     private final ITaskRepository taskRepository;

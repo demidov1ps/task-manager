@@ -1,11 +1,21 @@
 package ru.volnenko.se.command.task;
 
-import ru.volnenko.se.command.AbstractCommand;
+import org.springframework.stereotype.Component;
+
+import ru.volnenko.se.command.ICommand;
+import ru.volnenko.se.controller.ICommandReader;
 
 /**
  * @author Denis Volnenko
  */
-public final class TaskRemoveCommand extends AbstractCommand {
+@Component
+public final class TaskRemoveCommand implements ICommand {
+
+    private final ICommandReader commandReader;
+
+    public TaskRemoveCommand(ICommandReader commandReader) {
+        this.commandReader = commandReader;
+    }
 
     @Override
     public String command() {
@@ -21,7 +31,7 @@ public final class TaskRemoveCommand extends AbstractCommand {
     public void execute() {
         System.out.println("[REMOVING TASK]");
         System.out.println("Enter task order index:");
-        final Integer orderIndex = bootstrap.nextInteger();
+        final Integer orderIndex = commandReader.nextInteger();
         if (orderIndex == null) {
             System.out.println("Error! Incorrect order index...");
             System.out.println();

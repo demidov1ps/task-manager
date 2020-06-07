@@ -1,11 +1,21 @@
 package ru.volnenko.se.command.system;
 
-import ru.volnenko.se.command.AbstractCommand;
+import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.stereotype.Component;
+
+import ru.volnenko.se.command.ICommand;
 
 /**
  * @author Denis Volnenko
  */
-public final class HelpCommand extends AbstractCommand {
+@Component
+public final class HelpCommand implements ICommand {
+
+    private final AbstractApplicationContext context;
+
+    public HelpCommand(AbstractApplicationContext context) {
+        this.context = context;
+    }
 
     @Override
     public String command() {
@@ -19,9 +29,8 @@ public final class HelpCommand extends AbstractCommand {
 
     @Override
     public void execute() {
-        for (AbstractCommand command: bootstrap.getListCommand()) {
-            System.out.println(command.command()+ ": " + command.description());
-        }
+        context.getBeansOfType(ICommand.class).values().forEach(
+                command -> System.out.println(command.command()+ ": " + command.description()));
     }
 
 }
