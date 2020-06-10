@@ -1,5 +1,6 @@
 package ru.volnenko.se.command.project;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import ru.volnenko.se.command.ICommand;
@@ -20,6 +21,7 @@ public final class ProjectRemoveCommand implements ICommand {
         return "Remove selected project.";
     }
 
+    @Async
     @Override
     public void execute() {
 

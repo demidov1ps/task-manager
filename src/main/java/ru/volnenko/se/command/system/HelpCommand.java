@@ -1,6 +1,7 @@
 package ru.volnenko.se.command.system;
 
 import org.springframework.context.support.AbstractApplicationContext;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import ru.volnenko.se.command.ICommand;
@@ -27,6 +28,7 @@ public final class HelpCommand implements ICommand {
         return "Show all commands.";
     }
 
+    @Async
     @Override
     public void execute() {
         context.getBeansOfType(ICommand.class).values().forEach(

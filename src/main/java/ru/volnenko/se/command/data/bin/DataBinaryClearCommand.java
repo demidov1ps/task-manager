@@ -6,6 +6,7 @@ import ru.volnenko.se.constant.DataConstant;
 import java.io.File;
 import java.nio.file.Files;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -24,6 +25,7 @@ public final class DataBinaryClearCommand implements ICommand {
         return "Remove binary data.";
     }
 
+    @Async
     @Override
     public void execute() throws Exception {
         final File file = new File(DataConstant.FILE_BINARY);

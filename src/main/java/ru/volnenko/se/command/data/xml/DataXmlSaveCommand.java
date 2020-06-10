@@ -12,6 +12,7 @@ import ru.volnenko.se.entity.Domain;
 import java.io.File;
 import java.nio.file.Files;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -36,6 +37,7 @@ public final class DataXmlSaveCommand implements ICommand {
         return "Save Domain to XML.";
     }
 
+    @Async
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA XML SAVE]");

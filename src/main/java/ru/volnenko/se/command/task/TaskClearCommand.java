@@ -1,5 +1,6 @@
 package ru.volnenko.se.command.task;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import ru.volnenko.se.api.repository.ITaskRepository;
@@ -27,6 +28,7 @@ public final class TaskClearCommand implements ICommand {
         return "task-clear";
     }
 
+    @Async
     @Override
     public void execute() {
         taskRepository.clear();

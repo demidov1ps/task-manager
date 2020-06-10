@@ -12,6 +12,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectOutputStream;
 import java.nio.file.Files;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -38,6 +39,7 @@ public final class DataBinarySaveCommand implements ICommand {
         return "Load data from binary file.";
     }
 
+    @Async
     @Override
     public void execute() throws Exception {
         System.out.println("[DATA BINARY SAVE]");

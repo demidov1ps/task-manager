@@ -1,5 +1,6 @@
 package ru.volnenko.se.command.task;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import ru.volnenko.se.api.repository.ITaskRepository;
@@ -28,6 +29,7 @@ public final class TaskListCommand implements ICommand {
         return "Show all tasks.";
     }
 
+    @Async
     @Override
     public void execute() {
         System.out.println("[TASK LIST]");

@@ -11,6 +11,7 @@ import ru.volnenko.se.entity.Domain;
 import java.io.File;
 import java.nio.file.Files;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 /**
@@ -35,6 +36,7 @@ public final class DataXmlLoadCommand implements ICommand {
         return "Load Domain from XML.";
     }
 
+    @Async
     @Override
     public void execute() throws Exception {
         System.out.println("[LOAD XML DATA]");

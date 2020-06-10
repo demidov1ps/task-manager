@@ -1,14 +1,16 @@
 package ru.volnenko.se.controller;
 
-import java.util.LinkedHashMap;
-import java.util.List;
 import java.util.Map;
 
+import org.springframework.context.event.ContextRefreshedEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.context.support.AbstractApplicationContext;
 import org.springframework.stereotype.Component;
 
 import ru.volnenko.se.command.ICommand;
 import ru.volnenko.se.error.CommandAbsentException;
 import ru.volnenko.se.error.CommandCorruptException;
+import ru.volnenko.se.event.CommandEvent;
 
 /**
  * @author Denis Volnenko
@@ -17,14 +19,20 @@ import ru.volnenko.se.error.CommandCorruptException;
 public final class Bootstrap {
 
     private final ICommandReader commandReader;
-    private final Map<String, ICommand> commands = new LinkedHashMap<>();
+    private final AbstractApplicationContext context;
 
-    public Bootstrap(ICommandReader commandReader, List<ICommand> commandsList) {
+    public Bootstrap(ICommandReader commandReader, AbstractApplicationContext context) {
         this.commandReader = commandReader;
-        if (commandsList.isEmpty()) {
+        this.context = context;
+    }
+
+    @EventListener(ContextRefreshedEvent.class)
+    public void validateCommands() {
+        Map<String, ICommand> commands = context.getBeansOfType(ICommand.class);
+        if (commands.isEmpty()) {
             throw new CommandAbsentException();
         }
-        for (ICommand command : commandsList) {
+        for (ICommand command : commands.values()) {
             String cliCommand = command.command();
             String cliDescription = command.description();
             if (cliCommand == null || cliCommand.isEmpty()) {
@@ -33,7 +41,6 @@ public final class Bootstrap {
             if (cliDescription == null || cliDescription.isEmpty()) {
                 throw new CommandCorruptException();
             }
-            commands.put(cliCommand, command);
         }
     }
 
@@ -42,14 +49,7 @@ public final class Bootstrap {
         String command = "";
         while (!"exit".equals(command)) {
             command = commandReader.nextLine();
-            execute(command);
+            context.publishEvent(new CommandEvent(command));
         }
-    }
-
-    private void execute(final String command) throws Exception {
-        if (command == null || command.isEmpty()) return;
-        final ICommand abstractCommand = commands.get(command);
-        if (abstractCommand == null) return;
-        abstractCommand.execute();
     }
 }

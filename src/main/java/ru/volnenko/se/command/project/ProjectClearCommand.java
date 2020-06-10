@@ -1,5 +1,6 @@
 package ru.volnenko.se.command.project;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import ru.volnenko.se.api.repository.IProjectRepository;
@@ -27,6 +28,7 @@ public final class ProjectClearCommand implements ICommand {
         return "Remove all projects.";
     }
 
+    @Async
     @Override
     public void execute() {
         projectRepository.clear();

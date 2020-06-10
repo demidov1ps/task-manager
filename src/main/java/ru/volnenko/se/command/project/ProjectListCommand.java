@@ -1,5 +1,6 @@
 package ru.volnenko.se.command.project;
 
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import ru.volnenko.se.api.service.IProjectService;
@@ -28,6 +29,7 @@ public final class ProjectListCommand implements ICommand {
         return "Show all projects.";
     }
 
+    @Async
     @Override
     public void execute() {
         System.out.println("[PROJECT LIST]");
